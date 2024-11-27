@@ -1,0 +1,30 @@
+.header {
+  background: #ffffff;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 15px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.header h1,
+.header img {
+  flex: none;
+  flex-grow: 0;
+}
+
+.header h1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 60px;
+  letter-spacing: -0.05em;
+  color: #141413;
+}
+
+.header img {
+  width: 43px;
+  height: 52px;
+}
