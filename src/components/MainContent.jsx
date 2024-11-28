@@ -1,15 +1,23 @@
 import "../styles/MainContent.css";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import IngredientsContainer from "./IngredientsContainer.jsx";
 import RecipeContainer from "./RecipeContainer.jsx";
 import RecipeSection from "./RecipeSection.jsx";
-import { getRecipeFromMistral } from "../ai.js";
+// import { getRecipeFromMistral } from "../ai.js";
 
 function Main() {
   const [main, setMain] = useState({
     ingredients: [],
-    recipe: "",
+    recipe: false,
   });
+
+  const recipeContainer = useRef(null);
+
+  useEffect(() => {
+    if (main.recipe !== "" && recipeContainer.current !== null) {
+      recipeContainer.current.scrollIntoView();
+    }
+  }, [main.recipe]);
 
   const ingredientsListItems = main.ingredients.map((ingredient) => (
     <li key={ingredient}>{ingredient}</li>
@@ -24,12 +32,19 @@ function Main() {
     });
   }
 
-  async function handleRecipeShown() {
-    const recipeFromMistral = await getRecipeFromMistral(main.ingredients);
+  // async function handleRecipeShown() {
+  //   const recipeFromMistral = await getRecipeFromMistral(main.ingredients);
 
+  //   setMain({
+  //     ...main,
+  //     recipe: recipeFromMistral,
+  //   });
+  // }
+
+  function handleRecipeShown() {
     setMain({
       ...main,
-      recipe: recipeFromMistral,
+      recipe: !main.recipe,
     });
   }
 
@@ -55,12 +70,15 @@ function Main() {
         <>
           <IngredientsContainer ingredientsListItems={ingredientsListItems} />
           {main.ingredients.length > 3 && (
-            <RecipeContainer onClick={handleRecipeShown} />
+            <RecipeContainer
+              ref={recipeContainer}
+              onClick={handleRecipeShown}
+            />
           )}
         </>
       )}
 
-      {main.recipe && <RecipeSection recipe={main.recipe} />}
+      {main.recipe && <RecipeSection />}
     </>
   );
 }
