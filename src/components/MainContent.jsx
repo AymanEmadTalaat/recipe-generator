@@ -69,7 +69,7 @@ function Main() {
       {main.ingredients.length > 0 && (
         <>
           <IngredientsContainer ingredientsListItems={ingredientsListItems} />
-          {main.ingredients.length > 3 && (
+          {main.ingredients.length > 2 && (
             <RecipeContainer
               ref={recipeContainer}
               onClick={handleRecipeShown}
