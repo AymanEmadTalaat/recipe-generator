@@ -21,7 +21,7 @@ function Main() {
         ...main,
         spinner: "",
       });
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timeOut);
   }, [main]);
