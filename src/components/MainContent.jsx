@@ -4,14 +4,27 @@ import IngredientsContainer from "./IngredientsContainer.jsx";
 import RecipeContainer from "./RecipeContainer.jsx";
 import RecipeSection from "./RecipeSection.jsx";
 // import { getRecipeFromMistral } from "../ai.js";
+import LoadingSpinner from "./LoadingSpinner.jsx";
 
 function Main() {
   const [main, setMain] = useState({
     ingredients: [],
     recipe: false,
+    spinner: <LoadingSpinner />,
   });
 
   const recipeContainer = useRef(null);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setMain({
+        ...main,
+        spinner: "",
+      });
+    }, 2000);
+
+    return () => clearTimeout(timeOut);
+  }, [main]);
 
   useEffect(() => {
     if (main.recipe !== "" && recipeContainer.current !== null) {
@@ -79,6 +92,7 @@ function Main() {
       )}
 
       {main.recipe && <RecipeSection />}
+      {main.recipe && main.spinner}
     </>
   );
 }
